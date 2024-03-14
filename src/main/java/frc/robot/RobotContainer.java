@@ -38,6 +38,7 @@ public class RobotContainer {
   private HashMap<Integer,String> autoMap = new HashMap<>(){
     {
       put(0,"Test");
+      put(1,"Test2");
     }
   };
 
@@ -68,7 +69,7 @@ public class RobotContainer {
     m_automodeChooser.setDefaultOption("Do nothing", Commands.none());
 
     for (int i = 0; i < autoMap.size(); i++) {
-      m_automodeChooser.addOption(autoMap.get(i), new AutoTrajectory(m_robotDrive, autoMap.get(i)).getCommand());
+      m_automodeChooser.addOption("", new AutoTrajectory(m_robotDrive, "Test").getCommand());
     }
 
     SmartDashboard.putData("Auto Chooser",m_automodeChooser);
