@@ -9,13 +9,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.drive.AutoTrajectory;
+import frc.robot.subsystems.drive.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-import com.pathplanner.lib.auto.AutoBuilder;
+import java.util.HashMap;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -30,13 +31,20 @@ public class RobotContainer {
   // The driver's controller
   final CommandXboxController m_driverController = new CommandXboxController(0);
 
-  private SendableChooser<Command> autoChooser = new SendableChooser<>();
+  private static SendableChooser<Command> m_automodeChooser = new SendableChooser<>();
+
+  //This is just for fun, instead of changing the name in 2 different spots when a new auto is created,
+  //Instead, just add the name to the map and it will show up in the SmartDashboard
+  private HashMap<Integer,String> autoMap = new HashMap<>(){
+    {
+      put(0,"Test");
+    }
+  };
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    autoChooser = AutoBuilder.buildAutoChooser();
     
     // Configure the button bindings
     configureButtonBindings();
@@ -53,7 +61,17 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
 
-    SmartDashboard.putData(autoChooser);
+    autoModeChooser();
+  }
+
+  private void autoModeChooser() {
+    m_automodeChooser.setDefaultOption("Do nothing", Commands.none());
+
+    for (int i = 0; i < autoMap.size(); i++) {
+      m_automodeChooser.addOption(autoMap.get(i), new AutoTrajectory(m_robotDrive, autoMap.get(i)).getCommand());
+    }
+
+    SmartDashboard.putData("Auto Chooser",m_automodeChooser);
   }
 
   /**
@@ -75,6 +93,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    return m_automodeChooser.getSelected();
   }
 }

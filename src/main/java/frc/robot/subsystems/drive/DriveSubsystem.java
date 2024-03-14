@@ -1,6 +1,8 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.drive;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.util.WPIUtilJNI;
 import frc.utils.SwerveUtils;
@@ -17,6 +19,7 @@ import edu.wpi.first.networktables.StructPublisher;
 import com.kauailabs.navx.frc.*;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -258,6 +261,10 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getTurnRate() {
     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+  }
+
+  public Command resetPoseCommand(Supplier<Pose2d> poseSupplier){
+    return runOnce(() -> resetOdometry(poseSupplier.get()));
   }
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit) {
