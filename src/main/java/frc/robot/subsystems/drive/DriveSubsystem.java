@@ -17,6 +17,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import com.kauailabs.navx.frc.*;
+
+import frc.robot.Constants.CANIDConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,23 +35,23 @@ public class DriveSubsystem extends SubsystemBase {
     private final Field2d m_field = new Field2d();
 
   private final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
-      DriveConstants.kFrontLeftDrivingCanId,
-      DriveConstants.kFrontLeftTurningCanId,
+      CANIDConstants.kFrontLeftDrivingCanId,
+      CANIDConstants.kFrontLeftTurningCanId,
       DriveConstants.kFrontLeftChassisAngularOffset);
 
   private final MAXSwerveModule m_frontRight = new MAXSwerveModule(
-      DriveConstants.kFrontRightDrivingCanId,
-      DriveConstants.kFrontRightTurningCanId,
+      CANIDConstants.kFrontRightDrivingCanId,
+      CANIDConstants.kFrontRightTurningCanId,
       DriveConstants.kFrontRightChassisAngularOffset);
 
   private final MAXSwerveModule m_backLeft = new MAXSwerveModule(
-      DriveConstants.kBackLeftDrivingCanId,
-      DriveConstants.kBackLeftTurningCanId,
+      CANIDConstants.kBackLeftDrivingCanId,
+      CANIDConstants.kBackLeftTurningCanId,
       DriveConstants.kBackLeftChassisAngularOffset);
 
   private final MAXSwerveModule m_backRight = new MAXSwerveModule(
-      DriveConstants.kBackRightDrivingCanId,
-      DriveConstants.kBackRightTurningCanId,
+      CANIDConstants.kBackRightDrivingCanId,
+      CANIDConstants.kBackRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset);
 
 
